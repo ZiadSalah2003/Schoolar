@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Schoolar.Core;
+using Schoolar.infrastructure;
 using Schoolar.infrastructure.Persistence;
+using Schoolar.Service;
 
 namespace Schoolar.API
 {
@@ -13,6 +16,10 @@ namespace Schoolar.API
 			services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionStrings));
 
 			services.AddSwaggerServices();
+
+			services.AddInfrastructureDependencies()
+					.AddServiceDependencies()
+					.AddCoreDependencies();
 
 			return services;
 		}

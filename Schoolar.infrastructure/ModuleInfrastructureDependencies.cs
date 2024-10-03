@@ -1,7 +1,15 @@
-﻿namespace Schoolar.infrastructure
-{
-	public class ModuleInfrastructureDependencies
-	{
+﻿using Microsoft.Extensions.DependencyInjection;
+using Schoolar.infrastructure.Abstracts;
+using Schoolar.infrastructure.Repositories;
 
+namespace Schoolar.infrastructure
+{
+	public static class ModuleInfrastructureDependencies
+	{
+		public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
+		{
+			services.AddScoped<IStudentRepository, StudentRepository>();
+			return services;
+		}
 	}
 }
