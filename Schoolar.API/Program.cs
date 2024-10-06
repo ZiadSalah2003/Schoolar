@@ -1,4 +1,6 @@
 
+using Schoolar.Core.Middleware;
+
 namespace Schoolar.API
 {
 	public class Program
@@ -17,7 +19,7 @@ namespace Schoolar.API
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
-
+			app.UseMiddleware<ErrorHandlerMiddleware>();
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
