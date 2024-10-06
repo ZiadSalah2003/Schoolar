@@ -15,7 +15,9 @@ using System.Threading.Tasks;
 namespace Schoolar.Core.Features.Students.Commands.Handlers
 {
 	public class StudentCommandHandler : ResponseHandler,
-		IRequestHandler<CreateStudentCommand, Response<string>>
+		IRequestHandler<CreateStudentCommand, Response<string>>,
+		IRequestHandler<EditStudentCommand, Response<string>>,
+		IRequestHandler<DeleteStudentCommand, Response<string>>
 	{
 		private readonly IStudentService _studentService;
 		private readonly IMapper _mapper;
@@ -30,11 +32,36 @@ namespace Schoolar.Core.Features.Students.Commands.Handlers
 			var studentMapper = _mapper.Map<Student>(request);
 			var student = await _studentService.CreateStudentAsync(studentMapper);
 
-			if (student == "Exist")
-				return UnprocessableEntity<string>("Name is Exists");
-
-			else if (student == "Success")
+			if (student == "Success")
 				return Created("Added Successfuly");
+
+			return BadRequest<string>("Something went wrong");
+		}
+		public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
+		{
+			var studentExist = await _studentService.GetStudentByIdAsync(request.Id);
+			if (studentExist is null)
+				return NotFound<string>("Student not found");
+
+			var studentMapper = _mapper.Map<Student>(request);
+			var student = await _studentService.EditStudentAsync(studentMapper);
+
+			if (student == "Success")
+				return Success("Update Successfuly");
+
+			return BadRequest<string>("Something went wrong");
+		}
+
+		public async Task<Response<string>> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+		{
+			var studentExist = await _studentService.GetStudentByIdAsync(request.Id);
+			if (studentExist is null)
+				return NotFound<string>("Student not found");
+
+			var result = await _studentService.DeleteStudentAsync(studentExist);
+
+			if (result == "Success")
+				return Deleted<string>("Deleted Successfuly");
 
 			return BadRequest<string>("Something went wrong");
 		}

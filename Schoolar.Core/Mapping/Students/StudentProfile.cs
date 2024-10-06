@@ -17,6 +17,7 @@ namespace Schoolar.Core.Mapping.Students
             GetStudentsQueryMapping();
 			GetStudentsQueryMapping();
 			CreateStudentCommandMapping();
+            EditStudentCommandMapping();
 		}
     }
 }

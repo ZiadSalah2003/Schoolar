@@ -21,11 +21,17 @@ namespace Schoolar.Service.Implementations
 		{
 			return await _studentRepository.GetStudentsAsync();
 		}
-		public async Task<Student> GetStudentByIdAsync(int id)
+		public async Task<Student> GetStudentByIdWithIncludeAsync(int id)
 		{
 			var student = _studentRepository.GetTableNoTracking().Include(d => d.Department).Where(x => x.StudentId == id).FirstOrDefault();
 			return student;
 		}
+		public async Task<Student> GetStudentByIdAsync(int id)
+		{
+			var student = _studentRepository.GetTableNoTracking().Where(x => x.StudentId == id).FirstOrDefault();
+			return student;
+		}
+
 		public async Task<string> CreateStudentAsync(Student student)
 		{
 			if (student.DepartmentId == null)
@@ -40,6 +46,36 @@ namespace Schoolar.Service.Implementations
 			if (student is not null)
 				return true;
 			return false;
+		}
+
+		public async Task<bool> IsNameExistExcludeSelf(string name, int id)
+		{
+			var student = _studentRepository.GetTableNoTracking().Where(x => x.Name == name && x.StudentId != id).FirstOrDefault();
+			if (student is not null)
+				return true;
+			return false;
+		}
+		public async Task<string> EditStudentAsync(Student student)
+		{
+			await _studentRepository.UpdateAsync(student);
+			return "Success";
+		}
+		public async Task<string> DeleteStudentAsync(Student student)
+		{
+			var transaction = _studentRepository.BeginTransaction();
+			try
+			{
+				await _studentRepository.DeleteAsync(student);
+				await transaction.CommitAsync();
+				return "Success";
+			}
+			catch
+			{
+				await transaction.RollbackAsync();
+				return "Falied";
+			}
+			
+			
 		}
 	}
 }

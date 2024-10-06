@@ -32,5 +32,19 @@ namespace Schoolar.API.Controllers
 			var result = await Mediator.Send(student);
 			return NewResult(result);
 		}
+
+		[HttpPut(Route.StudentRoute.EditStudent)]
+		public async Task<IActionResult> UpdateStudent([FromBody] EditStudentCommand student)
+		{
+			var result = await Mediator.Send(student);
+			return NewResult(result);
+		}
+		[HttpDelete(Route.StudentRoute.DeleteStudent)]
+		public async Task<IActionResult> DeleteStudent([FromBody] int id)
+		{
+			var result = await Mediator.Send(new DeleteStudentCommand(id));
+			return NewResult(result);
+		}
+
 	}
 }

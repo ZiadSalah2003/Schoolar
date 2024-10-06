@@ -19,7 +19,9 @@ namespace Schoolar.Data.AppMetaData
 			public const string Prefix = Rule + "Student";
 			public const string GetStudents = Prefix +"/all-student";
 			public const string GetStudentById = Prefix + SingleRoute;
-			public const string CreateStudent = Prefix + "/Create";
+			public const string CreateStudent = Prefix + "/create";
+			public const string EditStudent = Prefix + "/update";
+			public const string DeleteStudent = Prefix + SingleRoute;
 		}
 	}
 }
