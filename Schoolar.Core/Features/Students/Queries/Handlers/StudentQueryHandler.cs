@@ -33,7 +33,7 @@ namespace Schoolar.Core.Features.Students.Queries.Handlers
 
 		public async Task<Response<GetStudentResponse>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
 		{
-			var student = await _studentService.GetStudentByIdAsync(request.Id);
+			var student = await _studentService.GetStudentByIdWithIncludeAsync(request.Id);
 			if (student is null)
 				return NotFound<GetStudentResponse>("Student with this id was not found");
 			var resultMapper = _mapper.Map<GetStudentResponse>(student);
