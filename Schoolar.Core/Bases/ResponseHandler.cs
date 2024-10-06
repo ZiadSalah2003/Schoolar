@@ -42,22 +42,22 @@ namespace Schoolar.Core.Bases
 				Message = "Unauthorized"
 			};
 		}
-		public Response<T> BadRequest<T>(string Message = null)
+		public Response<T> BadRequest<T>(string message = null)
 		{
 			return new Response<T>()
 			{
 				StatusCode = System.Net.HttpStatusCode.BadRequest,
 				Succeeded = false,
-				Message = "BadRequest"
+				Message = message == null ? "BadRequest" : message
 			};
 		}
-		public Response<T> UnprocessableEntity<T>(string Message = null)
+		public Response<T> UnprocessableEntity<T>(string message = null)
 		{
 			return new Response<T>()
 			{
 				StatusCode = System.Net.HttpStatusCode.UnprocessableEntity,
 				Succeeded = false,
-				Message = "UnprocessableEntity"
+				Message = message == null ? "UnprocessableEntity" : message
 			};
 		}
 		public Response<T> NotFound<T>(string message = null)
@@ -66,7 +66,7 @@ namespace Schoolar.Core.Bases
 			{
 				StatusCode = System.Net.HttpStatusCode.NotFound,
 				Succeeded = false,
-				Message = "NotFound"
+				Message = message == null ? "NotFound" : message
 			};
 		}
 		public Response<T> Created<T>(T entity, object Meta = null)

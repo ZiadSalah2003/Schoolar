@@ -19,9 +19,9 @@ namespace Schoolar.Data.Entities
 		public string Address { get; set; }
 		[StringLength(500)]
 		public string Phone { get; set; }
-		public int? DID { get; set; }
+		public int? DepartmentId { get; set; }
 
-		[ForeignKey("DID")]
+		[ForeignKey("DepartmentId")]
 		public virtual Department Department { get; set; }
 	}
 }
