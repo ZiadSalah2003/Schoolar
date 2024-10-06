@@ -28,15 +28,18 @@ namespace Schoolar.Service.Implementations
 		}
 		public async Task<string> CreateStudentAsync(Student student)
 		{
-			var nameIsExist = _studentRepository.GetTableNoTracking().Where(x => x.Name == student.Name).FirstOrDefault();
-			if (nameIsExist is not null)
-				return "Exist";
-
 			if (student.DepartmentId == null)
 				student.DepartmentId = null;
 
 			await _studentRepository.AddAsync(student);
 			return "Success";
+		}
+		public async Task<bool> IsNameExist(string name)
+		{
+			var student = _studentRepository.GetTableNoTracking().Where(x => x.Name == name).FirstOrDefault();
+			if (student is not null)
+				return true;
+			return false;
 		}
 	}
 }

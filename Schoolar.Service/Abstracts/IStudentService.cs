@@ -12,5 +12,6 @@ namespace Schoolar.Service.Abstracts
 		public Task<List<Student>> GetStudentsAsync();
 		public Task<Student> GetStudentByIdAsync(int id);
 		public Task<string> CreateStudentAsync(Student student);
+		public Task<bool> IsNameExist(string name);
 	}
 }
