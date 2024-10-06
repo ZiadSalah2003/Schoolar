@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Schoolar.Data.Entities;
+using Schoolar.Core.Features.Students.Commands.Models;
 
 namespace Schoolar.Core.Mapping.Students
 {
@@ -13,7 +14,9 @@ namespace Schoolar.Core.Mapping.Students
     {
         public StudentProfile()
         {
-            GetStudentsMapping();
+            GetStudentsQueryMapping();
+			GetStudentsQueryMapping();
+			CreateStudentCommandMapping();
 		}
     }
 }

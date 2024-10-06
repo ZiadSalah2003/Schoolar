@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Schoolar.infrastructure.Abstracts;
 using Schoolar.infrastructure.Repositories;
+using Schoolar.Service.Abstracts;
+using Schoolar.Service.Implementations;
 
 namespace Schoolar.Service
 {
@@ -8,7 +10,7 @@ namespace Schoolar.Service
 	{
 		public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
 		{
-			services.AddScoped<IStudentRepository, StudentRepository>();
+			services.AddScoped<IStudentService, StudentService>();
 			return services;
 		}
 	}

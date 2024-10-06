@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace Schoolar.Core.Features.Students.Queries.Handlers
 {
-	public class StudentQueryHandler : ResponseHandler, IRequestHandler<GetStudentsQuery,Response<List<GetStudentsResponse>>>
+	public class StudentQueryHandler : ResponseHandler,
+		IRequestHandler<GetStudentsQuery,Response<List<GetStudentsResponse>>>,
+		IRequestHandler<GetStudentByIdQuery,Response<GetStudentResponse>>
 	{
 		private readonly IStudentService _studentService;
 		private readonly IMapper _mapper;
@@ -26,6 +28,15 @@ namespace Schoolar.Core.Features.Students.Queries.Handlers
 		{
 			var result = await _studentService.GetStudentsAsync();
 			var resultMapper = _mapper.Map<List<GetStudentsResponse>>(result);
+			return Success(resultMapper);
+		}
+
+		public async Task<Response<GetStudentResponse>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
+		{
+			var student = await _studentService.GetStudentByIdAsync(request.Id);
+			if (student is null)
+				return NotFound<GetStudentResponse>("Student with this id was not found");
+			var resultMapper = _mapper.Map<GetStudentResponse>(student);
 			return Success(resultMapper);
 		}
 	}

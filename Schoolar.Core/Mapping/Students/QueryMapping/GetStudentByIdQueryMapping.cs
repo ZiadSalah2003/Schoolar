@@ -10,9 +10,9 @@ namespace Schoolar.Core.Mapping.Students
 {
 	public partial class StudentProfile
 	{
-		public void GetStudentsMapping()
+		public void GetStudentByIQuerydMapping()
 		{
-			CreateMap<Student, GetStudentsResponse>()
+			CreateMap<Student, GetStudentResponse>()
 				.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName));
 		}
 	}
