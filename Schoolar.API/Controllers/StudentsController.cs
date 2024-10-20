@@ -19,6 +19,14 @@ namespace Schoolar.API.Controllers
 			var result = await Mediator.Send(new GetStudentsQuery());
 			return Ok(result);
 		}
+
+		[HttpGet(Route.StudentRoute.Paginated)]
+		public async Task<IActionResult> GetStudentsPaginated([FromQuery] GetStudentPaginatedListQuery query)
+		{
+			var result = await Mediator.Send(query);
+			return Ok(result);
+		}
+
 		[HttpGet(Route.StudentRoute.GetStudentById)]
 		public async Task<IActionResult> GetStudentById([FromRoute] int id)
 		{
