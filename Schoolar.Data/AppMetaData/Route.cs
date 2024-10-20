@@ -22,6 +22,7 @@ namespace Schoolar.Data.AppMetaData
 			public const string CreateStudent = Prefix + "/create";
 			public const string EditStudent = Prefix + "/update";
 			public const string DeleteStudent = Prefix + SingleRoute;
+			public const string Paginated = Prefix + "/Paginated";
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Schoolar.Data.Entities;
+using Schoolar.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace Schoolar.Service.Abstracts
 		public Task<bool> IsNameExistExcludeSelf(string name, int id);
 		public Task<string> EditStudentAsync(Student student);
 		public Task<string> DeleteStudentAsync(Student student);
+		public IQueryable<Student> GetStudentsQueryable();
+		public IQueryable<Student> FilterStudentsPaginatedQueryable(StudentOrderingEnum order,string search);
 	}
 }

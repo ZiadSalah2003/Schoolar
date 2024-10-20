@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Schoolar.Data.Entities;
+using Schoolar.Data.Helpers;
 using Schoolar.infrastructure.Abstracts;
 using Schoolar.Service.Abstracts;
 using System;
@@ -74,8 +75,38 @@ namespace Schoolar.Service.Implementations
 				await transaction.RollbackAsync();
 				return "Falied";
 			}
-			
-			
+		}
+
+		public IQueryable<Student> GetStudentsQueryable()
+		{
+			return _studentRepository.GetTableNoTracking().Include(x => x.Department).AsQueryable();
+		}
+
+		public IQueryable<Student> FilterStudentsPaginatedQueryable(StudentOrderingEnum order, string search)
+		{
+			var qureable = _studentRepository.GetTableNoTracking().Include(x => x.Department).AsQueryable();
+			if (search != null)
+				qureable = qureable.Where(x => x.Name.Contains(search) || x.Address.Contains(search));
+
+			switch (order)
+			{
+				case StudentOrderingEnum.Name:
+					qureable = qureable.OrderBy(x => x.Name);
+					break;
+
+				case StudentOrderingEnum.Address:
+					qureable = qureable.OrderBy(x => x.Address);
+					break;
+
+				case StudentOrderingEnum.DepartmentName:
+					qureable = qureable.OrderBy(x => x.Department.DepartmentName);
+					break;
+
+				default:
+					qureable = qureable.OrderBy(x => x.StudentId);
+					break;
+			}
+			return qureable;
 		}
 	}
 }
