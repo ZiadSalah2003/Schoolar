@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Schoolar.Core;
 using Schoolar.infrastructure;
 using Schoolar.infrastructure.Persistence;
 using Schoolar.Service;
+using System.Globalization;
 
 namespace Schoolar.API
 {
@@ -19,7 +21,8 @@ namespace Schoolar.API
 
 			services.AddInfrastructureDependencies()
 					.AddServiceDependencies()
-					.AddCoreDependencies();
+					.AddCoreDependencies()
+					.AddLocalizationServices();
 
 			return services;
 		}
@@ -28,6 +31,30 @@ namespace Schoolar.API
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			services.AddEndpointsApiExplorer();
 			services.AddSwaggerGen();
+
+			return services;
+		}
+
+		private static IServiceCollection AddLocalizationServices(this IServiceCollection services)
+		{
+			services.AddControllersWithViews()
+					.AddViewLocalization(option =>
+					{
+						option.ResourcesPath = "";
+					});
+					services.Configure<RequestLocalizationOptions>(options =>
+					{
+						List<CultureInfo> supportedCultures = new List<CultureInfo>
+						{
+							new CultureInfo("en-US"),
+							new CultureInfo("de-DE"),
+							new CultureInfo("fr-FR"),
+							new CultureInfo("ar-EG")
+						};
+						options.DefaultRequestCulture = new RequestCulture("en-US");
+						options.SupportedCultures = supportedCultures;
+						options.SupportedUICultures = supportedCultures;
+					});
 
 			return services;
 		}

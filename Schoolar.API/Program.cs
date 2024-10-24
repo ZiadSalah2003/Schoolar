@@ -1,4 +1,5 @@
 
+using Microsoft.Extensions.Options;
 using Schoolar.Core.Middleware;
 
 namespace Schoolar.API
@@ -19,6 +20,9 @@ namespace Schoolar.API
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+			var options =app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+			app.UseRequestLocalization(options.Value);
+
 			app.UseMiddleware<ErrorHandlerMiddleware>();
 			app.UseHttpsRedirection();
 

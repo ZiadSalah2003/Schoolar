@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using Schoolar.Core.Bases;
 using Schoolar.Core.Features.Students.Commands.Models;
 using Schoolar.Core.Features.Students.Queries.Contracts;
 using Schoolar.Core.Features.Students.Queries.Models;
+using Schoolar.Core.Resources;
 using Schoolar.Data.Entities;
 using Schoolar.Service.Abstracts;
 using System;
@@ -21,10 +23,12 @@ namespace Schoolar.Core.Features.Students.Commands.Handlers
 	{
 		private readonly IStudentService _studentService;
 		private readonly IMapper _mapper;
-		public StudentCommandHandler(IStudentService studentService, IMapper mapper)
+		private readonly IStringLocalizer<SharedResources> _localizer;
+		public StudentCommandHandler(IStudentService studentService, IMapper mapper, IStringLocalizer<SharedResources> localizer) : base(localizer)
 		{
 			_studentService = studentService;
 			_mapper = mapper;
+			_localizer = localizer;
 		}
 
 		public async Task<Response<string>> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
@@ -33,7 +37,7 @@ namespace Schoolar.Core.Features.Students.Commands.Handlers
 			var student = await _studentService.CreateStudentAsync(studentMapper);
 
 			if (student == "Success")
-				return Created("Added Successfuly");
+				return Created("");
 
 			return BadRequest<string>("Something went wrong");
 		}
