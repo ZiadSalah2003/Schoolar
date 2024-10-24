@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using Schoolar.Core.Features.Students.Commands.Models;
+using Schoolar.Core.Resources;
 using Schoolar.Service.Abstracts;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,11 @@ namespace Schoolar.Core.Features.Students.Commands.Validators
 	public class CreateStudentValidator : AbstractValidator<CreateStudentCommand>
 	{
 		private readonly IStudentService _studentService;
-		public CreateStudentValidator(IStudentService studentService)
+		private readonly IStringLocalizer<SharedResources> _localizer;
+		public CreateStudentValidator(IStudentService studentService, IStringLocalizer<SharedResources> localizer)
         {
 			_studentService = studentService;
+			_localizer = localizer;
 			ApplyValidationsRules();
 			ApplyCustomValidationsRules();
 		}
@@ -22,7 +26,7 @@ namespace Schoolar.Core.Features.Students.Commands.Validators
 		public void ApplyValidationsRules()
 		{
 			RuleFor(x => x.Name)
-				.NotEmpty().WithMessage("Name must not be empty")
+				.NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
 				.NotNull().WithMessage("Name must not be null")
 				.MaximumLength(10).WithMessage("max length is 10");
 

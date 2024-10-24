@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using Schoolar.Core.Bases;
 using Schoolar.Core.Features.Students.Queries.Contracts;
 using Schoolar.Core.Features.Students.Queries.Models;
+using Schoolar.Core.Resources;
 using Schoolar.Core.Wrappers;
 using Schoolar.Data.Entities;
 using Schoolar.Service.Abstracts;
@@ -22,10 +24,12 @@ namespace Schoolar.Core.Features.Students.Queries.Handlers
 	{
 		private readonly IStudentService _studentService;
 		private readonly IMapper _mapper;
-		public StudentQueryHandler(IStudentService studentService, IMapper mapper)
+		private readonly IStringLocalizer<SharedResources> _localizer;
+		public StudentQueryHandler(IStudentService studentService, IMapper mapper, IStringLocalizer<SharedResources> localizer) : base(localizer)
 		{
 			_studentService = studentService;
 			_mapper = mapper;
+			_localizer = localizer;
 		}
 		public async Task<Response<List<GetStudentsResponse>>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
 		{
@@ -38,7 +42,7 @@ namespace Schoolar.Core.Features.Students.Queries.Handlers
 		{
 			var student = await _studentService.GetStudentByIdWithIncludeAsync(request.Id);
 			if (student is null)
-				return NotFound<GetStudentResponse>("Student with this id was not found");
+				return NotFound<GetStudentResponse>(_localizer[SharedResourcesKeys.NotFound]);
 			var resultMapper = _mapper.Map<GetStudentResponse>(student);
 			return Success(resultMapper);
 		}
