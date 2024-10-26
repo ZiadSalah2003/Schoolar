@@ -13,7 +13,8 @@ namespace Schoolar.Core.Mapping.Students
 		public void GetStudentsQueryMapping()
 		{
 			CreateMap<Student, GetStudentsResponse>()
-				.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName));
+				.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+				.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Localize(src.NameAr, src.Name)));
 		}
 	}
 }
