@@ -27,13 +27,13 @@ namespace Schoolar.Core.Features.Students.Commands.Validators
 		{
 			RuleFor(x => x.Name)
 				.NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
-				.NotNull().WithMessage("Name must not be null")
-				.MaximumLength(10).WithMessage("max length is 10");
+				 .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
+				 .MaximumLength(100).WithMessage(_localizer[SharedResourcesKeys.MaxLengthis100]);
 
 			RuleFor(x => x.Address)
-				.NotEmpty().WithMessage("{PropertyName} must not be empty")
-				.NotNull().WithMessage("{PropertyName} must not be null")
-				.MaximumLength(10).WithMessage("{PropertyName} length is 10");
+				.NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
+				.NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
+				.MaximumLength(100).WithMessage(_localizer[SharedResourcesKeys.MaxLengthis100]);
 		}
 
 		public void ApplyCustomValidationsRules()
