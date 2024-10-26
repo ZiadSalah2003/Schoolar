@@ -47,7 +47,7 @@ namespace Schoolar.Core.Features.Students.Commands.Handlers
 			if (studentExist is null)
 				return NotFound<string>("Student not found");
 
-			var studentMapper = _mapper.Map<Student>(request);
+			var studentMapper = _mapper.Map(request, studentExist);
 			var student = await _studentService.EditStudentAsync(studentMapper);
 
 			if (student == "Success")
