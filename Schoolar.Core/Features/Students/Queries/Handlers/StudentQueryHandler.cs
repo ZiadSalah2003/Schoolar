@@ -35,7 +35,9 @@ namespace Schoolar.Core.Features.Students.Queries.Handlers
 		{
 			var result = await _studentService.GetStudentsAsync();
 			var resultMapper = _mapper.Map<List<GetStudentsResponse>>(result);
-			return Success(resultMapper);
+			var response = Success(resultMapper);
+			response.Meta = new { Count = resultMapper.Count() };
+			return response;
 		}
 
 		public async Task<Response<GetStudentResponse>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
@@ -49,10 +51,11 @@ namespace Schoolar.Core.Features.Students.Queries.Handlers
 
 		public async Task<PaginatedResult<GetStudentPaginatedListResponse>> Handle(GetStudentPaginatedListQuery request, CancellationToken cancellationToken)
 		{
-			Expression<Func<Student, GetStudentPaginatedListResponse>> expression = e => new GetStudentPaginatedListResponse(e.Name, e.Address, e.Department.DepartmentName);
+			Expression<Func<Student, GetStudentPaginatedListResponse>> expression = e => new GetStudentPaginatedListResponse(e.Localize(e.NameAr, e.Name), e.Address, e.Department.Localize(e.Department.DepartmentNameAr, e.Department.DepartmentName));
 			//var querable = _studentService.GetStudentsQueryable();
-			var filterQuery = _studentService.FilterStudentsPaginatedQueryable(request.OrderBy,request.Search);
+			var filterQuery = _studentService.FilterStudentsPaginatedQueryable(request.OrderBy, request.Search);
 			var paginatedList = await filterQuery.Select(expression).ToPaginatedListAsync(request.PageNumber, request.PageSize);
+			paginatedList.Meta = new { Count = paginatedList.Data.Count() };
 			return paginatedList;
 		}
 	}
