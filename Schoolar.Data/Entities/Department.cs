@@ -18,6 +18,8 @@ namespace Schoolar.Data.Entities
         [Key]
 		public int DepartmentId { get; set; }
 		[StringLength(500)]
+		public string? DepartmentNameAr { get; set; }
+		[StringLength(500)]
 		public string? DepartmentName { get; set; }
 		public virtual ICollection<Student> Students { get; set; }
 		public virtual ICollection<DepartmetSubject> DepartmentSubjects { get; set; }
