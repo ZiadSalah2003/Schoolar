@@ -10,11 +10,6 @@ namespace Schoolar.Data.Entities
 {
 	public class Subjects
 	{
-        public Subjects()
-        {
-			StudentsSubjects = new HashSet<StudentSubject>();
-			DepartmetsSubjects = new HashSet<DepartmetSubject>();
-		}
         [Key]
 		public int SubjectId { get; set; }
 		[StringLength(500)]
@@ -22,7 +17,17 @@ namespace Schoolar.Data.Entities
 		[StringLength(500)]
 		public string? SubjectName { get; set; }
 		public DateTime Period { get; set; }
+		[InverseProperty("Subject")]
 		public virtual ICollection<StudentSubject> StudentsSubjects { get; set; }
+		[InverseProperty("Department")]
 		public virtual ICollection<DepartmetSubject> DepartmetsSubjects { get; set; }
+		[InverseProperty("Instructor")]
+		public virtual ICollection<InstructorSubject> InstructorSubjects { get; set; }
+		public Subjects()
+		{
+			StudentsSubjects = new HashSet<StudentSubject>();
+			DepartmetsSubjects = new HashSet<DepartmetSubject>();
+			InstructorSubjects = new HashSet<InstructorSubject>();
+		}
 	}
 }

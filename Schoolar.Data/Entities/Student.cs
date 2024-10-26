@@ -25,6 +25,14 @@ namespace Schoolar.Data.Entities
 		public int? DepartmentId { get; set; }
 
 		[ForeignKey("DepartmentId")]
+		[InverseProperty("Students")]
 		public virtual Department Department { get; set; }
-	}
+		[InverseProperty("Student")]
+		public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
+
+        public Student()
+        {
+			StudentSubjects= new HashSet<StudentSubject>();
+		}
+    }
 }

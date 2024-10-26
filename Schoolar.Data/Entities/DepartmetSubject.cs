@@ -11,14 +11,15 @@ namespace Schoolar.Data.Entities
 	public class DepartmetSubject
 	{
 		[Key]
-		public int DepartmetSubjectId { get; set; }
 		public int DepartmetId { get; set; }
+		[Key]
 		public int SubjectId { get; set; }
 
-		[ForeignKey("DID")]
+		[ForeignKey("DepartmetId")]
+		[InverseProperty("DepartmentSubjects")]
 		public virtual Department Department { get; set; }
 
-		[ForeignKey("SubID")]
+		[ForeignKey("SubjectId")]
 		public virtual Subjects Subject { get; set; }
 	}
 }
