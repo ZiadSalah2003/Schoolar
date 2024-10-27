@@ -20,6 +20,7 @@ namespace Schoolar.Data.Entities
 		public virtual Department Department { get; set; }
 
 		[ForeignKey("SubjectId")]
+		[InverseProperty("DepartmetsSubjects")]
 		public virtual Subjects Subject { get; set; }
 	}
 }

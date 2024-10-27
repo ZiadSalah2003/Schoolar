@@ -14,12 +14,14 @@ namespace Schoolar.Data.Entities
 		public int StudentId { get; set; }
 		[Key]
 		public int SubjectId { get; set; }
+		public decimal? Grade { get; set; }
 
 		[ForeignKey("StudentId")]
-		[InverseProperty("StudentSubjects")]
-		public virtual Student Student { get; set; }
+		[InverseProperty("StudentSubject")]
+		public virtual Student? Student { get; set; }
+
 		[ForeignKey("SubjectId")]
 		[InverseProperty("StudentsSubjects")]
-		public virtual Subjects Subject { get; set; }
+		public virtual Subjects? Subject { get; set; }
 	}
 }

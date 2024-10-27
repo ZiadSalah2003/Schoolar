@@ -16,9 +16,9 @@ namespace Schoolar.Data.Entities
 		public int SubjectId { get; set; }
 		[ForeignKey(nameof(InstructorId))]
 		[InverseProperty("InstructorSubjects")]
-		public Instructor Instructor { get; set; }
+		public Instructor? instructor { get; set; }
 		[ForeignKey(nameof(SubjectId))]
 		[InverseProperty("InstructorSubjects")]
-		public Subjects Subject { get; set; }
+		public Subjects? Subject { get; set; }
 	}
 }

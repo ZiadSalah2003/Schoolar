@@ -11,6 +11,7 @@ namespace Schoolar.Data.Entities
 	public class Subjects
 	{
         [Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int SubjectId { get; set; }
 		[StringLength(500)]
 		public string? SubjectNameAr { get; set; }
@@ -19,10 +20,11 @@ namespace Schoolar.Data.Entities
 		public DateTime Period { get; set; }
 		[InverseProperty("Subject")]
 		public virtual ICollection<StudentSubject> StudentsSubjects { get; set; }
-		[InverseProperty("Department")]
+		[InverseProperty("Subject")]
 		public virtual ICollection<DepartmetSubject> DepartmetsSubjects { get; set; }
-		[InverseProperty("Instructor")]
+		[InverseProperty("Subject")]
 		public virtual ICollection<InstructorSubject> InstructorSubjects { get; set; }
+
 		public Subjects()
 		{
 			StudentsSubjects = new HashSet<StudentSubject>();

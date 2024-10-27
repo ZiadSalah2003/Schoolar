@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Schoolar.infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Schoolar.infrastructure.Persistence;
 namespace Schoolar.infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241027003216_AddInstructorTableAndConfiguration")]
+    partial class AddInstructorTableAndConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,14 +44,14 @@ namespace Schoolar.infrastructure.Migrations
                     b.Property<int?>("InsManager")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InstructorManger")
+                    b.Property<int>("InstructorManger")
                         .HasColumnType("int");
 
                     b.HasKey("DepartmentId");
 
-                    b.HasIndex("InstructorManger")
+                    b.HasIndex("InsManager")
                         .IsUnique()
-                        .HasFilter("[InstructorManger] IS NOT NULL");
+                        .HasFilter("[InsManager] IS NOT NULL");
 
                     b.ToTable("Departments");
                 });
@@ -77,24 +80,28 @@ namespace Schoolar.infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DepartmentId")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameAr")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Salary")
+                    b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("SupervisorId")
+                    b.Property<int>("SupervisorId")
                         .HasColumnType("int");
 
                     b.HasKey("InstructorId");
@@ -130,6 +137,7 @@ namespace Schoolar.infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -137,14 +145,17 @@ namespace Schoolar.infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NameAr")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -162,9 +173,6 @@ namespace Schoolar.infrastructure.Migrations
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("Grade")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("StudentId", "SubjectId");
 
@@ -201,8 +209,7 @@ namespace Schoolar.infrastructure.Migrations
                 {
                     b.HasOne("Schoolar.Data.Entities.Instructor", "Instructor")
                         .WithOne("departmentManager")
-                        .HasForeignKey("Schoolar.Data.Entities.Department", "InstructorManger")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Schoolar.Data.Entities.Department", "InsManager");
 
                     b.Navigation("Instructor");
                 });
@@ -230,12 +237,15 @@ namespace Schoolar.infrastructure.Migrations
                 {
                     b.HasOne("Schoolar.Data.Entities.Department", "department")
                         .WithMany("Instructors")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Schoolar.Data.Entities.Instructor", "Supervisor")
                         .WithMany("Instructors")
                         .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Supervisor");
 
