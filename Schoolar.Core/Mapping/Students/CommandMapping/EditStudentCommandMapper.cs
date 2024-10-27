@@ -14,7 +14,9 @@ namespace Schoolar.Core.Mapping.Students
 		{
 			CreateMap<EditStudentCommand, Student>()
 					.ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.DepartmentId))
-					.ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.Id));
+					.ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.Id))
+					.ForMember(dest => dest.NameAr, opt => opt.MapFrom(src => src.NameAr))
+					.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 		}
 	}
 }
