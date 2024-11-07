@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Schoolar.infrastructure.Abstracts
 {
-	public interface IStudentRepository : IGenericReposatoriyAsync<Student>
+	public interface IDepartmentRepository : IGenericReposatoriyAsync<Department>
 	{
-		public Task<List<Student>> GetStudentsAsync();
+		public Task<List<Department>> GetDepartmentsAsync();
 	}
 }

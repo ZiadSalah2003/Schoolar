@@ -11,16 +11,12 @@ using System.Threading.Tasks;
 
 namespace Schoolar.infrastructure.Repositories
 {
-	public class StudentRepository : GenericRepositoryAsync<Student>, IStudentRepository
+	public class SubjectRepository : GenericRepositoryAsync<Subjects>, ISubjectRepository
 	{
-		private readonly DbSet<Student> _student;
-		public StudentRepository(ApplicationDbContext context) : base(context)
+		private readonly DbSet<Subjects> _subject;
+		public SubjectRepository(ApplicationDbContext context) : base(context)
 		{
-			_student = context.Set<Student>();
-		}
-		public async Task<List<Student>> GetStudentsAsync()
-		{
-			return await _student.Include(x => x.Department).ToListAsync();
+			_subject = context.Set<Subjects>();
 		}
 	}
 }
