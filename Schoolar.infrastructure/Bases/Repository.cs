@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Schoolar.infrastructure.Bases
 {
-	public class Repository<T> : IRepository<T> where T : class
+	public class GenericRepositoryAsync<T> : IGenericReposatoriyAsync<T> where T : class
 	{
 		protected readonly ApplicationDbContext _context;
-        public Repository(ApplicationDbContext context)
+        public GenericRepositoryAsync(ApplicationDbContext context)
         {
 			_context = context;
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Schoolar.infrastructure.Bases
 {
-	public interface IRepository<T> where T : class
+	public interface IGenericReposatoriyAsync<T> where T : class
 	{
 		
 		Task  DeleteRangeAsync(ICollection<T> entities);
