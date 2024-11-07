@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schoolar.Data.Commons;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Schoolar.Data.Entities
 {
-	public class Instructor
+	public class Instructor : GeneralLocalizableEntity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
