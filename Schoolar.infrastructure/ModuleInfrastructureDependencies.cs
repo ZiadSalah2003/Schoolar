@@ -10,7 +10,10 @@ namespace Schoolar.infrastructure
 		public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
 		{
 			services.AddScoped<IStudentRepository, StudentRepository>();
-			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			services.AddScoped<IInstructorRepository, InstructorRepository>();
+			services.AddScoped<ISubjectRepository, SubjectRepository>();
+			services.AddScoped(typeof(IGenericReposatoriyAsync<>), typeof(GenericRepositoryAsync<>));
 			return services;
 		}
 	}
