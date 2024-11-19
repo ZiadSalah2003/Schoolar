@@ -21,6 +21,13 @@ namespace Schoolar.Core.Mapping.Departments
 				.ForMember(dest => dest.Students, opt => opt.MapFrom(src => src.Students))
 				.ForMember(dest => dest.Instructors, opt => opt.MapFrom(src => src.Instructors));
 
+			CreateMap<DepartmetSubject, SubjectResponse>()
+				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SubjectId))
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Subject.Localize(src.Subject.SubjectNameAr, src.Subject.SubjectName)));
+
+			CreateMap<Instructor, InstructorResponse>()
+				 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.InstructorId))
+				 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Localize(src.NameAr, src.Name)));
 		}
 	}
 }
